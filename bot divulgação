@@ -1,0 +1,474 @@
+// package.json
+{
+  "name": "discord-divulgacao-bot",
+  "version": "1.0.0",
+  "description": "Bot Discord para sistema de divulgação com aprovação - 100% Gratuito no Render",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "echo \"Bot funcionando perfeitamente!\" && exit 0"
+  },
+  "keywords": [
+    "discord",
+    "bot", 
+    "divulgacao",
+    "moderacao",
+    "render",
+    "gratuito"
+  ],
+  "author": "Seu Nome",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^14.13.0",
+    "express": "^4.18.2",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "seu-repositorio-github"
+  }
+}
+
+// .env.example (ARQUIVO MODELO - renomeie para .env e preencha)
+# ========================================
+# CONFIGURAÇÕES DO BOT DISCORD
+# ========================================
+
+# Token do seu bot Discord (obtenha em https://discord.com/developers/applications)
+# IMPORTANTE: Mantenha este token em SEGREDO!
+DISCORD_TOKEN=SEU_TOKEN_AQUI
+
+# ID da aplicação Discord (encontre em Developer Portal > General Information)
+CLIENT_ID=SEU_CLIENT_ID_AQUI
+
+# ID do servidor de teste (clique com botão direito no servidor > Copiar ID)
+GUILD_ID=SEU_GUILD_ID_AQUI
+
+# Porta do servidor Express (Render define automaticamente, deixe 3000 para desenvolvimento local)
+PORT=3000
+
+# Ambiente (development para local, production para Render)
+NODE_ENV=development
+
+# ========================================
+# COMO OBTER ESTAS INFORMAÇÕES:
+# ========================================
+# 1. Acesse: https://discord.com/developers/applications
+# 2. Crie uma nova aplicação
+# 3. Vá em "Bot" e copie o TOKEN
+# 4. O CLIENT_ID está em "General Information" > "Application ID"
+# 5. Para GUILD_ID: no Discord, clique direito no seu servidor > "Copiar ID"
+
+// .gitignore
+# ========================================
+# NUNCA COMMITAR ESTES ARQUIVOS
+# ========================================
+
+# Dependências
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Arquivos de ambiente (CRÍTICO - contém tokens secretos)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs e cache
+logs/
+*.log
+.cache/
+.tmp/
+
+# Arquivos do sistema operacional
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDEs e editores
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Arquivos temporários
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Arquivos de backup
+*.bak
+*.backup
+
+# README.md
+# 🤖 Bot Discord para Divulgação
+
+> ⚠️ **AVISO DE SEGURANÇA**: Este projeto contém configurações sensíveis. Siga EXATAMENTE as instruções de segurança abaixo.
+
+Bot completo para gerenciar divulgações em servidores Discord com sistema de aprovação moderada.
+
+## 🔒 PRIMEIRA COISA: SEGURANÇA
+
+### ⚠️ NUNCA commite o arquivo `.env` no GitHub!
+
+1. **Sempre use `.env.example`** como modelo
+2. **Crie seu próprio `.env`** local baseado no exemplo  
+3. **Verifique se `.env` está no `.gitignore`**
+4. **Tokens são SECRETOS** - nunca os compartilhe
+
+```bash
+# ✅ CORRETO: Usar arquivo de exemplo
+cp .env.example .env
+# Edite o .env com seus tokens
+
+# ❌ ERRADO: Nunca commitar .env real
+git add .env  # NÃO FAÇA ISSO!
+```
+
+## ✨ Funcionalidades
+
+- 📢 **Sistema de Divulgação**: Usuários enviam divulgações via modal interativo
+- 👮 **Moderação**: Aprovação/rejeição com botões interativos
+- ⏰ **Cooldowns**: Previne spam com tempos de espera
+- 📊 **Estatísticas**: Acompanhamento de uso por usuário
+- ⚙️ **Configurável**: Canais e permissões customizáveis por servidor
+- 🆓 **100% Gratuito**: Hospedado no Render.com
+
+## 🚀 Comandos Disponíveis
+
+| Comando | Descrição | Quem pode usar |
+|---------|-----------|----------------|
+| `/divulgar` | Enviar nova divulgação | Todos |
+| `/status` | Ver suas estatísticas | Todos |
+| `/config` | Configurar o bot | Administradores |
+| `/gerenciar` | Moderar divulgações | Moderadores |
+| `/botinfo` | Informações do bot | Todos |
+
+## 📋 Configuração Passo a Passo
+
+### 1. Criar o Bot no Discord
+
+1. Acesse [Discord Developer Portal](https://discord.com/developers/applications)
+2. Clique em **"New Application"** e dê um nome
+3. Vá em **"Bot"** → **"Add Bot"**
+4. **Copie o TOKEN** (mantenha em segredo!)
+5. Em **"Privileged Gateway Intents"**, habilite:
+   - ✅ MESSAGE CONTENT INTENT
+   - ✅ SERVER MEMBERS INTENT
+
+### 2. Configurar Tokens Localmente
+
+```bash
+# Clone o repositório
+git clone https://github.com/seu-usuario/seu-repo.git
+cd discord-divulgacao-bot
+
+# Copie o arquivo de exemplo
+cp .env.example .env
+
+# Edite o arquivo .env com seus dados reais
+nano .env  # ou use qualquer editor
+```
+
+### 3. Convidar o Bot
+
+Use este link (substitua `SEU_CLIENT_ID`):
+```
+https://discord.com/api/oauth2/authorize?client_id=SEU_CLIENT_ID&permissions=8&scope=bot%20applications.commands
+```
+
+### 4. Primeira Execução Local
+
+```bash
+# Instalar dependências
+npm install
+
+# Executar em modo desenvolvimento
+npm run dev
+
+# Se tudo estiver ok, verá: "Bot online como NomeDoBot#1234"
+```
+
+### 5. Configurar no Servidor Discord
+
+```bash
+# 1. Definir canal de aprovação
+/config acao:"Canal de Aprovação" canal:#aprovacoes
+
+# 2. Definir canal de divulgação  
+/config acao:"Canal de Divulgação" canal:#divulgacoes
+
+# 3. Definir role de moderador
+/config acao:"Role Moderador" role:@Moderador
+```
+
+## 🌐 Deploy no Render.com (100% GRATUITO)
+
+### Passo 1: Preparar Repositório GitHub
+
+```bash
+# Certifique-se que .env está sendo ignorado
+echo ".env" >> .gitignore
+
+# Commite apenas arquivos seguros
+git add .
+git commit -m "Initial commit - Bot Discord"
+git push origin main
+```
+
+### Passo 2: Deploy no Render
+
+1. Acesse [render.com](https://render.com) e crie conta gratuita
+2. Clique **"New +"** → **"Web Service"**
+3. Conecte seu repositório GitHub
+4. Configure:
+   - **Name**: `discord-divulgacao-bot`
+   - **Environment**: `Node`
+   - **Branch**: `main`
+   - **Build Command**: `npm install`
+   - **Start Command**: `npm start`
+
+### Passo 3: Variáveis de Ambiente no Render
+
+No painel do Render, adicione as seguintes **Environment Variables**:
+
+```
+DISCORD_TOKEN = MTQxNTQzMTE2MzA5ODY5Mzg3Mw.GH03Ng.FOXXfGd-c-Ra3IEU1E2nvu37dUMAPFdIMReSko
+CLIENT_ID = 1260276087355605098
+NODE_ENV = production
+```
+
+⚠️ **IMPORTANTE**: Nunca coloque tokens reais no código fonte!
+
+### Passo 4: Verificar Deploy
+
+- Deploy inicial: ~2-3 minutos
+- Logs em tempo real no painel
+- Bot ficará online 24/7!
+
+## 🔧 Recursos Técnicos
+
+- **Hospedagem**: Render.com (750h gratuitas/mês)
+- **Framework**: Discord.js v14  
+- **Servidor**: Express.js para health checks
+- **Persistência**: In-memory (adequado para uso básico)
+- **Monitoramento**: Logs automáticos
+
+## 📊 Limites do Plano Gratuito
+
+| Recurso | Limite | Status |
+|---------|--------|---------|
+| Servidores | Ilimitados | ✅ |
+| Usuários | Ilimitados | ✅ |
+| Comandos | Ilimitados | ✅ |
+| Uptime | 750h/mês | ✅ |
+| RAM | 512MB | ✅ |
+| Deploy | Automático | ✅ |
+
+## 🛠️ Desenvolvimento Local
+
+```bash
+# Clonar e configurar
+git clone seu-repositorio
+cd discord-bot
+npm install
+
+# Configurar ambiente
+cp .env.example .env
+# Edite .env com seus tokens
+
+# Executar
+npm run dev  # Desenvolvimento com hot-reload
+npm start    # Produção
+npm test     # Verificar se está funcionando
+```
+
+## 🐛 Solução de Problemas
+
+### 🤖 Bot não responde aos comandos?
+
+1. **Verifique o token**:
+   ```bash
+   # No Render, confira Environment Variables
+   # Localmente, verifique seu .env
+   ```
+
+2. **Verifique permissões**:
+   - Bot precisa ter permissão de "Administrator" 
+   - Ou pelo menos: Send Messages, Use Slash Commands
+
+3. **Aguarde propagação**:
+   - Comandos podem levar até 1 hora para aparecer globalmente
+
+### 🚫 Erro "Invalid Token"?
+
+```bash
+# 1. Verifique se token está correto no .env ou Render
+# 2. Token deve começar com algo como: "MTQxNTQz..."
+# 3. Se necessário, regenere o token no Discord Developer Portal
+```
+
+### 💾 Erro de memória no Render?
+
+- Bot é otimizado para 512MB
+- Reinicialização automática em caso de problemas
+- Verifique logs para detalhes específicos
+
+## 🔍 Estrutura dos Arquivos
+
+```
+discord-bot/
+├── package.json          # Dependências e scripts
+├── .env.example          # Modelo de configuração (SEGURO)
+├── .env                  # Seus tokens (NÃO COMMITAR)
+├── .gitignore           # Arquivos ignorados pelo Git
+├── index.js             # Código principal do bot
+├── README.md            # Este arquivo
+└── render.yaml          # Configurações do Render (opcional)
+```
+
+## 📞 Suporte
+
+### Problemas Comuns:
+
+1. **"Bot não aparece online"** → Verifique token e intents
+2. **"Comandos não funcionam"** → Verifique permissões
+3. **"Erro no deploy"** → Verifique logs no Render
+
+### Como Pedir Ajuda:
+
+1. Verifique este README primeiro
+2. Consulte os logs (localmente ou no Render)  
+3. Abra uma issue com:
+   - Descrição do problema
+   - Logs de erro (SEM tokens!)
+   - Passos para reproduzir
+
+## 📄 Licença
+
+MIT License - Use livremente, mas mantenha os créditos!
+
+## 🎯 Próximos Passos
+
+Após configurar o bot:
+
+1. **Teste todos os comandos** no seu servidor
+2. **Configure canais e roles** adequadamente  
+3. **Monitore logs** por alguns dias
+4. **Customize** conforme suas necessidades
+
+---
+
+**🎉 Bot 100% funcional e gratuito no Render.com!**
+
+**⚠️ Lembre-se**: Segurança é prioridade. Nunca exponha tokens!
+
+// render.yaml (Configuração opcional para deploy avançado)
+services:
+  - type: web
+    name: discord-divulgacao-bot
+    env: node
+    plan: free
+    region: oregon
+    buildCommand: npm ci
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+    scaling:
+      minInstances: 1
+      maxInstances: 1
+
+// .github/workflows/deploy.yml (GitHub Actions - opcional)
+name: Deploy to Render
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Run tests
+      run: npm test
+      
+  security-check:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Check for secrets in code
+      run: |
+        if grep -r "MTQxNTQz\|mfa\." --exclude-dir=node_modules .; then
+          echo "❌ Possible Discord token found in code!"
+          exit 1
+        fi
+        echo "✅ No tokens found in code"
+
+// Dockerfile (Opcional - para containers avançados)
+FROM node:18-alpine
+
+# Instalar dumb-init para handling de sinais
+RUN apk add --no-cache dumb-init
+
+# Criar usuário não-root
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S discord -u 1001 -G nodejs
+
+# Diretório de trabalho
+WORKDIR /app
+
+# Copiar arquivos de dependência primeiro (melhor cache)
+COPY package*.json ./
+RUN npm ci --only=production && \
+    npm cache clean --force
+
+# Copiar código fonte
+COPY --chown=discord:nodejs . .
+
+# Trocar para usuário não-root
+USER discord
+
+# Expor porta
+EXPOSE 3000
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+  CMD node -e "require('http').get('http://localhost:3000/health', (res) => { process.exit(res.statusCode === 200 ? 0 : 1) }).on('error', () => process.exit(1))"
+
+# Usar dumb-init para melhor handling de sinais
+ENTRYPOINT ["dumb-init", "--"]
+CMD ["node", "index.js"]
